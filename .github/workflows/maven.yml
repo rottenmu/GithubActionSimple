@@ -24,8 +24,8 @@ jobs:
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
-          scp_source: ./public/
-          scp_target: "/usr/opt"
+          source: $GITHUB_WORKSPACE
+          target: "/usr/opt"
            script: |
              echo "FROM maven
                    MAINTAINER rottenmu<599882714@qq.com>
