@@ -1,0 +1,32 @@
+name: discoveryPlatform build and deploy
+
+on:
+  push:
+    branches: [ feature ]
+
+jobs:
+  build:
+
+    runs-on: CentOS Linux release 8.2.2004
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+          # checkout到你的disocveryPlatform代码分支
+          ref: feature
+          # discoveryPlatform 需要加载内部子模块
+          submodules: true
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+      - name: Deploy to tianyi server
+        uses: easingthemes/ssh-deploy@v2.0.7
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
+          ARGS: "-avz --delete"
+          SOURCE: "public"
+          REMOTE_HOST: 218.78.55.64
+          REMOTE_USER: "root"
+          TARGET: "/usr/opt/discovery-guide"
