@@ -19,10 +19,6 @@ jobs:
           ref: main
           # githubActionSimple 需要加载内部子模块
           submodules: true
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
       - name: Deploy to tianyi server
         uses: actions/setup-java@v2
         env:
