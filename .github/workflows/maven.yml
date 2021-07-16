@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: CentOS Linux release 8.2.2004
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
