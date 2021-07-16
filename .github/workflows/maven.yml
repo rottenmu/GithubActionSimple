@@ -20,10 +20,12 @@ jobs:
           mvn package
       - name: Deploy to tianyi cloud server
         uses: easingthemes/ssh-deploy@v2.0.8
+        run: |
+           nohup java -jar github-action-guide-0.0.1-SNAPSHOT.jar &
         env:
           SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
           ARGS: "-avz --delete"
-          SOURCE: "public"
-          REMOTE_HOST: "218.78.55.64"
+          SOURCE: "./public/"
+          REMOTE_HOST: ${{secrets.TIANYI_SERVER_IP}}
           REMOTE_USER: "root"
           TARGET: "/usr/opt"
