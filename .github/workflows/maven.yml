@@ -27,4 +27,4 @@ jobs:
           SOURCE: "public"
           REMOTE_HOST: 218.78.55.64
           REMOTE_USER: "root"
-          TARGET: "/usr/opt/discovery-guide"
+          TARGET: "/usr/opt"
