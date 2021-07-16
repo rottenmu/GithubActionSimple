@@ -1,8 +1,8 @@
-name: discoveryPlatform build and deploy
+name: githubActionSimple build and deploy
 
 on:
   push:
-    branches: [ feature ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -13,16 +13,16 @@ jobs:
         uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
           persist-credentials: false
-          # checkout到你的disocveryPlatform代码分支
-          ref: feature
-          # discoveryPlatform 需要加载内部子模块
+          # checkout到你的githubActionSimple代码分支
+          ref: main
+          # githubActionSimple 需要加载内部子模块
           submodules: true
       - name: Install and Build
         run: |
           npm install
           npm run build
       - name: Deploy to tianyi server
-        uses: easingthemes/ssh-deploy@v2.0.7
+        uses: actions/setup-java@v2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
           ARGS: "-avz --delete"
