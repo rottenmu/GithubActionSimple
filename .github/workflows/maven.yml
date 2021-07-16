@@ -20,8 +20,8 @@ jobs:
           mvn package
       - name: Deploy to tianyi cloud server
         uses: easingthemes/ssh-deploy@v2.0.8
-        with: |
-           nohup java -jar github-action-guide-0.0.1-SNAPSHOT.jar &
+#        with: |
+#           nohup java -jar github-action-guide-0.0.1-SNAPSHOT.jar &
         env:
           SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
           ARGS: "-avz --delete"
