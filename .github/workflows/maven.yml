@@ -21,9 +21,10 @@ jobs:
       - name: Deploy to tianyi cloud server
         uses: easingthemes/ssh-deploy@v2.1.6
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
+          #SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
           ARGS: "-avz --delete"
           SOURCE: "public"
           REMOTE_HOST: 218.78.55.64
+          REMOTE_PASSWORD: ${{secrets.TIANYI_SERVER_PWD}}
           REMOTE_USER: "root"
           TARGET: "/usr/opt"
