@@ -10,14 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
-        with:
-          persist-credentials: false
-          # checkout到你的githubActionSimple代码分支
-          ref: main
-          # githubActionSimple 需要加载内部子模块
-          submodules: true
+      - uses: actions/checkout@v2
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
@@ -25,8 +18,14 @@ jobs:
           distribution: 'adopt'
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Deploy to tianyi server
-        uses: actions/setup-java@v2
+      - name: Checkout
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+          # checkout到你的githubActionSimple代码分支
+          ref: main
+          # githubActionSimple 需要加载内部子模块
+          submodules: false
         env:
           SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
           ARGS: "-avz --delete"
