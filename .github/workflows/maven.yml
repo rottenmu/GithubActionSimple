@@ -21,19 +21,19 @@ jobs:
       - name: scp jar upload tianyi cloud server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: ./public/github-action-guide-0.0.1-SNAPSHOT.jar
+          local: target/github-action-guide-0.0.1-SNAPSHOT.jar
           remote: /usr/opt
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
       - name: Deploy to tianyi cloud server
-        uses: appleboy/ssh-action@master
+        uses: fifsky/ssh-action@master
         with:
+          command: |
+             cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
           source: $GITHUB_WORKSPACE
           target: "/usr/opt"
-          script: |
-            cd /usr/opt
-            java -jar github-action-guide-0.0.1-SNAPSHOT.jar
+          args: tt
