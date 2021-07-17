@@ -20,7 +20,7 @@ jobs:
           mvn package
       - name: scp jar upload tianyi cloud server
         uses: garygrossgarten/github-action-scp@release
-        whith:
+        with:
           local: ./public/github-action-guide-0.0.1-SNAPSHOT.jar
           remote: /usr/opt
           host: ${{secrets.TIANYI_SERVER_IP}}
