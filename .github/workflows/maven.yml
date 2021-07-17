@@ -26,12 +26,12 @@ jobs:
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
-      - name: Deploy to tianyi cloud server
-        uses: fifsky/ssh-action@master
-        with:
-          script: |
-             cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
-          host: ${{secrets.TIANYI_SERVER_IP}}
-          username: root
-          password: ${{ secrets.TIANYI_SERVER_PWD }}
-          args: tt
+#      - name: Deploy to tianyi cloud server
+#        uses: fifsky/ssh-action@master
+#        with:
+#          script: |
+#             cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
+#          host: ${{secrets.TIANYI_SERVER_IP}}
+#          username: root
+#          password: ${{ secrets.TIANYI_SERVER_PWD }}
+#          args: tt
