@@ -21,15 +21,15 @@ jobs:
       - name: scp jar upload tianyi cloud server
         uses: kostya-ten/ssh-server-deploy@v4
         with:
-          scp_source: target/github-action-guide-0.0.1-SNAPSHOT.jar
-          sc_target: /usr/opt
+          source: target/github-action-guide-0.0.1-SNAPSHOT.jar
+          target: /usr/opt
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
       - name: Deploy to tianyi cloud server
         uses: fifsky/ssh-action@master
         with:
-          command: |
+          script: |
              cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
