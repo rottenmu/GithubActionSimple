@@ -13,17 +13,27 @@ jobs:
         # 这里使用java11的环境, 其他项目在github action中找到对应的语言环境就行
         uses: actions/setup-java@v1
         with:
-          java-version: 8
+          java-version: 1.8
       - name: Build with Maven
         # 这里maven的打包命令, 其他项目修改为对应的打包命令
         run: |
           mvn package
+      - name: scp jar upload tianyi cloud server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: target/github-action-guide-0.0.1-SNAPSHOT.jar
+          remote: /usr/opt
+          host: ${{secrets.TIANYI_SERVER_IP}}
+          username: root
+          password: ${{ secrets.TIANYI_SERVER_PWD }}
       - name: Deploy to tianyi cloud server
-        uses: easingthemes/ssh-deploy@v2.1.6
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.TIANYI_SERVER_ACCESS_TOKEN }}
-          ARGS: "-avz --delete"
-          SOURCE: "public"
-          REMOTE_HOST: 218.78.55.64
-          REMOTE_USER: "root"
-          TARGET: "/usr/opt"
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
+          host: ${{secrets.TIANYI_SERVER_IP}}
+          username: root
+          password: ${{ secrets.TIANYI_SERVER_PWD }}
+          source: $GITHUB_WORKSPACE
+          target: "/usr/opt"
+          args: tt

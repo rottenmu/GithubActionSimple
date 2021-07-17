@@ -19,10 +19,10 @@ jobs:
         run: |
           mvn package
       - name: scp jar upload tianyi cloud server
-        uses: garygrossgarten/github-action-scp@release
+        uses: kostya-ten/ssh-server-deploy@v4
         with:
-          local: target/github-action-guide-0.0.1-SNAPSHOT.jar
-          remote: /usr/opt
+          scp_source: target/github-action-guide-0.0.1-SNAPSHOT.jar
+          sc_target: /usr/opt
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
@@ -35,5 +35,4 @@ jobs:
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
           source: $GITHUB_WORKSPACE
-          target: "/usr/opt"
           args: tt
