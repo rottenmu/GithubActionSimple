@@ -34,7 +34,4 @@ jobs:
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
-          script: |
-            cd /usr/opt
-            wget http://download.redis.io/releases/redis-4.0.8.tar.gz
-            java -jar github-action-guide-0.0.1-SNAPSHOT.jar
+          run: cd /usr/opt && java -jar github-action-guide-0.0.1-SNAPSHOT.jar
