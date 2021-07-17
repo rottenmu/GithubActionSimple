@@ -18,32 +18,24 @@ jobs:
         # 这里maven的打包命令, 其他项目修改为对应的打包命令
         run: |
           mvn package
+      - name: scp jar upload tianyi cloud server
+        uses: garygrossgarten/github-action-scp@release
+        whith:
+          local: ./public/github-action-guide-0.0.1-SNAPSHOT.jar
+          remote: /usr/opt
+          host: ${{secrets.TIANYI_SERVER_IP}}
+          username: root
+          password: ${{ secrets.TIANYI_SERVER_PWD }}
       - name: Deploy to tianyi cloud server
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.TIANYI_SERVER_IP}}
           username: root
           password: ${{ secrets.TIANYI_SERVER_PWD }}
-          scp_source: ./public/
-          scp_target: "/usr/opt"
-           script: |
-             echo "FROM maven
-                   MAINTAINER rottenmu<599882714@qq.com>
-
-                   ENV CODE /code
-                   ENV WORK /code/work
-                   RUN mkdir -p $CODE \
-                       && mkdir -p $WORK
-
-                   WORKDIR $WORK
-
-                   # 这里将项目中./target/*.jar 复制到了 镜像里并命名为app.jar,  为什么是 ./target/*.jar , 因为 maven 打包后的文件就是在该路径, 如果是其他项目,填写对应路径 和名称就行了
-                   COPY ./target/*.jar platform.jar
-                   # 暴露出项目的 8060端口, 填你项目端口即可 (没有端口可忽略)
-                   EXPOSE 8080
-                   # 这是运行jar的命令,  如果是其他项目, 填写对应命令就行了
-                   CMD java -jar platform.jar" >Dockerfile
-             docker build -t platform .
-             docker run -d -p 8060:8060 --name platform platform
+          source: $GITHUB_WORKSPACE
+          target: "/usr/opt"
+          script: |
+            cd /usr/opt
+            java -jar github-action-guide-0.0.1-SNAPSHOT.jar
 
 
